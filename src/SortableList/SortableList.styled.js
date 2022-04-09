@@ -19,6 +19,25 @@ export const TitleRowElement = styled.div`
     justify-content: center;
     align-items: center;  
 `
+export const SelectInput = styled.select`
+    padding: .5rem 1rem;
+    margin: 0 1rem;
+    border-radius: 10px;
+    &:focus{
+        outline: none;
+    }
+`
+export const LabelSort = styled.div`
+    padding: 1rem 1rem;
+`
+
+export const InputCheckBox = styled.input.attrs({type: 'radio'})`
+    width: 3rem;
+`
+
+export const EmptyField = styled.div`
+    width: 3rem;
+`
 
 export const IdField = styled.div`
     width: 5rem;
@@ -30,17 +49,20 @@ export const IdField = styled.div`
 export const RowWrapper = styled.div`
     width: 100%;
     height: 3rem;
-    // background: red;
     display: flex; 
-    justify-content: center;
     align-items: center; 
     &:nth-child(even){
         background: lightGray;
     }
 `
 
-export const RowElement = styled(TitleRowElement)`
-
+export const RowElement = styled.div`
+    height: 100%;
+    width: ${props => { return props.widthEl+"px";}};
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+    align-items: center;  
 `
 export const AddButton = styled.div`
     cursor: pointer;
@@ -59,7 +81,7 @@ export const ButtonsWrapper = styled.div`
     align-items: center;
 `
 export const RatingWrapper = styled.div`
-    width: 10rem;
+    width: ${props => { return props.widthEl+"px";}};   
     height: 100%;
     display: flex;
     justify-content: center;
@@ -110,6 +132,20 @@ export const ModalInput = styled.input`
     &:focus{
         outline: none;
     }
+`
+export const Image = styled.img`
+    width: 3rem;
+    height: 3rem;
+    display: block;
+`
+export const ModalImageInput = styled.input.attrs({
+    type: 'file'
+})`
+padding: .3rem 0.5em;
+
+&:focus{
+    outline: none;
+}
 `
 
 export const ModalButton = styled.div`
