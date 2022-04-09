@@ -91,3 +91,35 @@ export const SearchInput = styled.input`
         outline: none;
     }
 `
+
+export const ModalWrapper = styled.div`
+    width: 30rem;
+    position: absolute;
+    background: white;
+    height: 20rem;
+    border: 2px solid lightGray;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    border-radius: 5px;
+`
+export const ModalInput = styled.input`
+    padding: .3rem 0.5em;
+
+    &:focus{
+        outline: none;
+    }
+`
+
+export const ModalButton = styled.div`
+    cursor: pointer;
+    padding: .5rem 1rem;
+    border: 1px solid lightGray;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin: 0 1rem;
+`
+export const Flex = styled.div`
+    display: flex;
+`

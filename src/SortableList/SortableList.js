@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { TiArrowUpThick, TiArrowDownThick } from "react-icons/ti";
 import { Rating } from '@mui/material';
 import { AddButton, ButtonsWrapper, IconBackground, IconWrapper, IdField, RatingWrapper, RemoveButton, RowElement, RowWrapper, SearchInput, SortableListWrapper, TitleRow, TitleRowElement } from './SortableList.styled'
+import { Modal } from './Modal';
 const data = [
     {name : 1, description: "desc 1", image : "imaage 1", rating: 5},
     {name : 2, description: "desc 2", image : "imaage 2", rating: 3},
@@ -19,6 +20,7 @@ const SortableList = () => {
 
     const [value, setValue] = useState(0)
     const [sortBy, setSortBy] = useState("");
+    const [isShowing, setIsShowing] = useState(false);
 
     const columnMap = columns.map( (col, index) => (
         <TitleRowElement>
@@ -49,17 +51,26 @@ const SortableList = () => {
         </RowWrapper>
     ))
 
+    const addRow = () => {
+
+    }
+
+    const openModal = () => {
+        setIsShowing(true);
+    }
+
   return (
     <>
     <ButtonsWrapper>
         <SearchInput placeholder='search..'/>
-        <AddButton>Add</AddButton>
+        <AddButton onClick={openModal}>Add</AddButton>
         <RemoveButton>Remove</RemoveButton>
     </ButtonsWrapper>
     <SortableListWrapper>
         <TitleRow><IdField></IdField>{columnMap} <RatingWrapper/></TitleRow>
         {rowMap}
     </SortableListWrapper>
+    {isShowing && <Modal addRow={addRow}/>}
     </>
   )
 }
