@@ -3,6 +3,8 @@ import { TiArrowUpThick, TiArrowDownThick } from "react-icons/ti";
 import { InputLabel, MenuItem, Rating, Select } from '@mui/material';
 import { AddButton, ButtonsWrapper, EmptyField, IconBackground, IconWrapper, IdField, Image, InputCheckBox, LabelSort, RatingWrapper, RemoveButton, RowElement, RowWrapper, SearchInput, SelectInput, SortableListWrapper, TitleRow, TitleRowElement } from './SortableList.styled'
 import { Modal } from './Modal';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToStore, updateStore } from '../actions/mainStoreAction';
 
 const columns = ["name", "description", "image", "rating"];
 
@@ -16,10 +18,17 @@ const SortableList = () => {
     const [sortType, setSortType] = useState("asc");
     const [tempData, setTempData] = useState([])
 
+    const dispatch = useDispatch();
+    const selector = useSelector((store) => {
+        console.log("store : ", store);
+        return store;
+    });
+
     const elementColRef = useRef();
 
     useEffect(() =>{
-    }, [dataTable, sortBy, sortType])
+        selector && setDataTable(selector);
+    }, [])
 
     const sortData = (data) => {
 
@@ -30,7 +39,6 @@ const SortableList = () => {
 
     const sortComparator = (a, b) => {
         if(sortType === 'asc'){
-            console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA:",typeof a[sortBy])
             if(typeof a[sortBy] === 'string'){
                if(a[sortBy] > b[sortBy]){
                    return 1;
@@ -66,6 +74,7 @@ const SortableList = () => {
         const dataWithoutElement = dataTable.filter( (e) => e.id != index);
         dataRef[0].rating = value;
         dataWithoutElement.splice(index - 1, 0, dataRef[0]);
+        dispatch(updateStore(dataWithoutElement))
         setDataTable(dataWithoutElement);
     }
 
@@ -103,6 +112,7 @@ const SortableList = () => {
     ))
 
     const addRow = (data) => {
+        dispatch(addToStore({id: dataTable.length + 1, ...data, rating: 0}));
         setDataTable([
             ...dataTable,
             {id: dataTable.length + 1, ...data, rating: 0}
@@ -122,6 +132,7 @@ const SortableList = () => {
         console.log("type : ", typeof selectedRow)
         if(selectedRow){
             const filteredData = dataTable.filter( (e) => e.id !== Number(selectedRow));
+            dispatch(updateStore(filteredData));
             setDataTable(filteredData);
         }
 
@@ -137,16 +148,15 @@ const SortableList = () => {
     console.log("SORT : ", sortBy, sortType)
     const searchInTable = (e) => {
         const searchValue = e.target.value;
-        setTempData(dataTable);
         if(searchValue){
-            const searched = dataTable.filter( (obj) => {
+            const searched = selector.filter( (obj) => {
                 return obj.name.includes(searchValue);
             });
-
-            console.log("SEARCHED : ", searched)
             setDataTable([...searched])
         }
-        if(!searchValue){}
+        if(!searchValue){
+            setDataTable(selector);
+        }
         
     }
   return (
